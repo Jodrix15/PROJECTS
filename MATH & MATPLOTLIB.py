@@ -51,7 +51,7 @@ def grafQuesos():
 #graficoPuntos()
 #graficoLinea()
 #grafBarras()
-#grafHistograma()
-grafQuesos()
+grafHistograma()
+#grafQuesos()
 
 
