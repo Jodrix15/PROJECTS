@@ -1,30 +1,25 @@
 import requests as r
 import json as js
 
-def getAPI_precipitation_the70s():
-    url = "https://archive-api.open-meteo.com/v1/archive?latitude=41.300526&longitude=2.0659971&start_date=1970-01-01&end_date=1979-12-31&daily=precipitation_sum&timezone=Europe%2FBerlin"
-    return r.get(url)
 def getDicc_Precipitation_the70s():
-    return getAPI_precipitation_the70s().json()
-def getAPI_Precipitation_last30Years():
-    url = "https://archive-api.open-meteo.com/v1/archive?latitude=41.306&longitude=2.002&start_date=1990-01-01&end_date=2023-12-31&daily=precipitation_sum&timezone=Europe%2FBerlin"
-    return r.get(url)
+    url = "https://archive-api.open-meteo.com/v1/archive?latitude=41.300526&longitude=2.0659971&start_date=1970-01-01&end_date=1979-12-31&daily=precipitation_sum&timezone=Europe%2FBerlin"
+    response = r.get(url)
+    return response.json()
 
 def getDicc_Precipitation_last30Years():
-    return getAPI_Precipitation_last30Years().json()
-
-def getAPI_temperature_the70s():
-    url = "https://archive-api.open-meteo.com/v1/archive?latitude=41.300526&longitude=2.0659971&start_date=1970-01-01&end_date=1979-12-31&daily=temperature_2m_mean&timezone=Europe%2FBerlin"
-    return r.get(url)
+    url = "https://archive-api.open-meteo.com/v1/archive?latitude=41.306&longitude=2.002&start_date=1990-01-01&end_date=2023-12-31&daily=precipitation_sum&timezone=Europe%2FBerlin"
+    response = r.get(url)
+    return response.json()
 
 def getDicc_temperature_the70s():
-    return getAPI_temperature_the70s().json()
-def getAPI_temperature_last30Years():
-    url = "https://archive-api.open-meteo.com/v1/archive?latitude=41.306&longitude=2.002&start_date=1993-01-01&end_date=2023-12-31&daily=temperature_2m_max,temperature_2m_min&timezone=Europe%2FBerlin"
-    return r.get(url)
+    url = "https://archive-api.open-meteo.com/v1/archive?latitude=41.300526&longitude=2.0659971&start_date=1970-01-01&end_date=1979-12-31&daily=temperature_2m_mean&timezone=Europe%2FBerlin"
+    response = r.get(url)
+    return response.json()
 
 def getDicc_temperature_last30Years():
-    return getAPI_temperature_last30Years().json()
+    url = "https://archive-api.open-meteo.com/v1/archive?latitude=41.306&longitude=2.002&start_date=1990-01-01&end_date=2023-12-31&daily=temperature_2m_max,temperature_2m_min&timezone=Europe%2FBerlin"
+    response = r.get(url)
+    return response.json()
 
 def get_precipitationFile_the70s(msj):
     try:
@@ -108,42 +103,83 @@ def getMediaTempMax_byYear(year, dates, dicc_tempMax):
 
     return sum(yearDayList_tempMax) / len(yearDayList_tempMax)
 
-def getMediaTempMed_byYear(tempMediaMax, tempMediaMin):
+def getTempMed_byYear(tempMediaMax, tempMediaMin):
     return (tempMediaMax+tempMediaMin)/2
 
 def getMediaTempMed_byDecade(tempMediaList):
     return sum(tempMediaList)/len(tempMediaList)
 
-def data_temperaturaMedia_last30years():
-    dicc_temperature = get_temperatureFile_last30years()
+def data_temperaturaMedia_last30years(rangoAnyo, msj):
+    dicc_temperature = get_temperatureFile_last30years(msj)
     dates = dicc_temperature["daily"]["time"]
     dicc_tempMin = dicc_temperature["daily"]["temperature_2m_min"]
     dicc_tempMax = dicc_temperature["daily"]["temperature_2m_max"]
 
-    years = [y for y in range(1993, 2024)]
-    list_tempMaxMed = []
-    list_tempMinMed = []
-    list_temMeanMed = []
+    if rangoAnyo == 30:
+        years = [y for y in range(1993, 2024)]
+        list_tempMaxMed = []
+        list_tempMinMed = []
+        list_temMeanMed = []
 
-    for y in years:
-        tempMaxMed = getMediaTempMax_byYear(str(y), dates, dicc_tempMax)
-        tempMinMed = getMediaTempMin_byYear(str(y), dates, dicc_tempMin)
-        list_tempMaxMed.append(tempMaxMed)
-        list_tempMinMed.append(tempMinMed)
-        list_temMeanMed.append(getMediaTempMed_byYear(tempMaxMed, tempMinMed))
+        for y in years:
+            tempMaxMed = getMediaTempMax_byYear(str(y), dates, dicc_tempMax)
+            tempMinMed = getMediaTempMin_byYear(str(y), dates, dicc_tempMin)
+            list_tempMaxMed.append(tempMaxMed)
+            list_tempMinMed.append(tempMinMed)
+            list_temMeanMed.append(getTempMed_byYear(tempMaxMed, tempMinMed))
+
+
+    elif rangoAnyo == 90:
+
+        years = [y for y in range(1990, 2000)]
+        list_tempMaxMed = []
+        list_tempMinMed = []
+        list_temMeanMed = []
+
+        for y in years:
+            tempMaxMed = getMediaTempMax_byYear(str(y), dates, dicc_tempMax)
+            tempMinMed = getMediaTempMin_byYear(str(y), dates, dicc_tempMin)
+            list_tempMaxMed.append(tempMaxMed)
+            list_tempMinMed.append(tempMinMed)
+            list_temMeanMed.append(getTempMed_byYear(tempMaxMed, tempMinMed))
+
+    elif rangoAnyo == 10:
+        years = [y for y in range(2013, 2024)]
+        list_tempMaxMed = []
+        list_tempMinMed = []
+        list_temMeanMed = []
+
+        for y in years:
+            tempMaxMed = getMediaTempMax_byYear(str(y), dates, dicc_tempMax)
+            tempMinMed = getMediaTempMin_byYear(str(y), dates, dicc_tempMin)
+            list_tempMaxMed.append(tempMaxMed)
+            list_tempMinMed.append(tempMinMed)
+            list_temMeanMed.append(getTempMed_byYear(tempMaxMed, tempMinMed))
+
+    else:
+        print("ERROR. Algo inesperado ha ocurrido")
+        list_tempMaxMed = []
+        list_tempMinMed = []
+        list_temMeanMed = []
+        years = []
+
 
     return [list_tempMaxMed, list_tempMinMed, list_temMeanMed, years]
 
-'''def data_temperaturaMedia_70vs90vsLast10():
-    dicc_temperature = get_temperatureFile_last30years()
-    dates = dicc_temperature["daily"]["time"]
-    dicc_tempMin = dicc_temperature["daily"]["temperature_2m_min"]
-    dicc_tempMax = dicc_temperature["daily"]["temperature_2m_max"]
+def data_temperaturaMedia_70vs90vsLast10():
+    dicc_temperature_the90s = data_temperaturaMedia_last30years(90, "Cargando diccionario de las temperaturas de los años 90...")
+    dicc_temperature_last10Years = data_temperaturaMedia_last30years(10, "Cargando diccionario de las temperaturas de los últimos 10 años...")
+    dicc_temperature_the70s = get_temperatureFile_the70s("Cargando diccionario de temperaturas de los años 70...")
 
-    listTempMedia_70s = get_temperatureFile_the70s()
-    listTempMedia_90s =
-    listTempMedia_last10Years =
-    return ""'''
+    listTempMedia_70s = dicc_temperature_the70s["daily"]["temperature_2m_mean"]
+    listTempMedia_90s = dicc_temperature_the90s[2]
+    listTempMedia_last10Years = dicc_temperature_last10Years[2]
+
+    media_70s = getMediaTempMed_byDecade(listTempMedia_70s)
+    media_90s = getMediaTempMed_byDecade(listTempMedia_90s)
+    media_last10Years = getMediaTempMed_byDecade(listTempMedia_last10Years)
+
+    return [media_70s, media_90s, media_last10Years]
 
 def sumPrecipitations_byYear(fecha, dates, precpList):
 
@@ -156,17 +192,6 @@ def sumPrecipitations_byYear(fecha, dates, precpList):
 
     return sumPrecipitation
 
-def calcular_sumPrecipitaciones_y_media(years, dates, precpList):
-    sumPre = []
-
-    for y in years:
-        sumPrecipitationYear = sumPrecipitations_byYear(str(y), dates, precpList)
-        sumPre.append(sumPrecipitationYear)
-
-    media = sum(sumPre) / len(sumPre)
-
-    return [sumPre, media]
-
 def data_sumPrecipitiaciones_last30Years(rangoAnyos, msj):
 
     diccPrecp = get_precipitationFile_last30Years(msj)
@@ -175,21 +200,33 @@ def data_sumPrecipitiaciones_last30Years(rangoAnyos, msj):
 
     if rangoAnyos == 30:
         years = [y for y in range(1993, 2024)]
-        data = calcular_sumPrecipitaciones_y_media(years, dates, precpList)
-        sumPre = data[0]
-        media = data [1]
+        sumPre = []
+
+        for y in years:
+            sumPrecipitationYear = sumPrecipitations_byYear(str(y), dates, precpList)
+            sumPre.append(sumPrecipitationYear)
+
+        media = sum(sumPre) / len(sumPre)
 
     elif rangoAnyos == 90:
         years = [y for y in range(1990, 2000)]
-        data = calcular_sumPrecipitaciones_y_media(years, dates, precpList)
-        sumPre = data[0]
-        media = data[1]
+        sumPre = []
+
+        for y in years:
+            sumPrecipitationYear = sumPrecipitations_byYear(str(y), dates, precpList)
+            sumPre.append(sumPrecipitationYear)
+
+        media = sum(sumPre) / len(sumPre)
 
     elif rangoAnyos == 10:
         years = [y for y in range(2023, 2012, -1)]
-        data = calcular_sumPrecipitaciones_y_media(years, dates, precpList)
-        sumPre = data[0]
-        media = data[1]
+        sumPre = []
+
+        for y in years:
+            sumPrecipitationYear = sumPrecipitations_byYear(str(y), dates, precpList)
+            sumPre.append(sumPrecipitationYear)
+
+        media = sum(sumPre) / len(sumPre)
 
     else:
         print("ERROR. Algo has salido mal...")
@@ -215,5 +252,5 @@ def data_sumpPrecipitaciones_70vs90vsLast10():
 
     return [media_sumPrecp_70s, media_sumPrecp_90s, media_sumPrecp_last10Years]
 
-
+print(data_temperaturaMedia_70vs90vsLast10())
 

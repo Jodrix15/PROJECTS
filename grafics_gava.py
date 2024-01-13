@@ -2,8 +2,10 @@ import clima_gava as cg
 import matplotlib.pyplot as plt
 import numpy as np
 
-def graph_precipitaciones_Last30Years():
+def barGraph_precipitaciones_Last30Years():
+
     RANGO_ANYOS = 30
+
     data_precp = cg.data_sumPrecipitiaciones_last30Years(RANGO_ANYOS, "Cargando diccionario de temperaturas de los últimos 30 años...")
     years = data_precp[2]
     sumPre = data_precp[0]
@@ -118,11 +120,24 @@ def graph_3Anyos_TempMasBaja():
     print(anyos)
     print(temperaturas)
 
+def plotGraph_tempEvolution_70vs90vsLast10Years():
+
+    data = cg.data_temperaturaMedia_70vs90vsLast10()
+
+    ejeX = ["Los 70s", "Los 90s", "Últimos 10 años"]
+    ejeY = [data[0], data[1], data[2]]
+
+    plt.plot(ejeX, ejeY)
+    plt.scatter(ejeX, ejeY)
+    plt.title("Evolución de la temperatura media")
+    plt.show()
+
 
 #graphTempMed_Last30Years()
 #graph_3Anyos_TempMediaMasAlta()
 #graph_3Anyos_TempMasBaja()
 #graph_precipitaciones_Last30Years()
-pieGraph_mediaPrecp_70vs80vsLast10()
+#pieGraph_mediaPrecp_70vs80vsLast10()
+plotGraph_tempEvolution_70vs90vsLast10Years()
 
 
