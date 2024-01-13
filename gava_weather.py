@@ -1,14 +1,14 @@
 import requests as r
 import json as js
 import sys
-from datetime import date as d
+
 
 def getAPI(fecha):
     '''obtenemos API'''
     url = "https://archive-api.open-meteo.com/v1/archive?latitude=41.306&longitude=2.002&start_date=" + fecha + "-01&end_date=" + fecha + "-31&daily=temperature_2m_max,temperature_2m_min,rain_sum&timezone=Europe%2FBerlin"
     return r.get(url)
 
-def getDiccionarioAPI(fecha):
+def Api2Dicc(fecha):
     '''esta función convierte lo que cogemos de la API a formato JSON (un diccionario)'''
     return getAPI(fecha).json()
 
@@ -60,7 +60,7 @@ def main():
     if len(args) != 2:
         print("No valido")
     else:
-        data = getDiccionarioAPI(fecha)
+        data = Api2Dicc(fecha)
         dates = data["daily"]["time"]
         tmpMaxList = data["daily"]["temperature_2m_max"]
         tmpMinList = data["daily"]["temperature_2m_min"]
