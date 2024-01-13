@@ -37,8 +37,8 @@ def pieGraph_mediaPrecp_70vs80vsLast10():
     plt.show()
 
 def graphTempMed_Last30Years():
-
-    temperatures_lists = cg.data_temperaturaMedia_last30years()
+    RANGO_ANYOS = 30
+    temperatures_lists = cg.data_temperaturaMedia_last30years(RANGO_ANYOS, "Cargando diccionario de temperaturas de los últimos 30 años...")
     ancho_barra = 0.4
     indice = np.arange(1993, 2024)
 
@@ -54,7 +54,8 @@ def graphTempMed_Last30Years():
     plt.show()
 
 def graph_3Anyos_TempMediaMasAlta():
-    temperatures_lists = cg.data_temperaturaMedia_last30years()
+    RANGO_ANYOS = 30
+    temperatures_lists = cg.data_temperaturaMedia_last30years(RANGO_ANYOS, "Cargando diccionario de temperaturas de los últimos 30 años...")
     anyos = []
     temperaturas = []
     list_30years = temperatures_lists[3]
@@ -88,7 +89,8 @@ def graph_3Anyos_TempMediaMasAlta():
 
 
 def graph_3Anyos_TempMasBaja():
-    temperatures_lists = cg.data_temperaturaMedia_last30years()
+    RANGO_ANYOS = 30
+    temperatures_lists = cg.data_temperaturaMedia_last30years(RANGO_ANYOS, "Cargando diccionario de temperaturas de los últimos 30 años...")
     anyos = []
     temperaturas = []
     list_30years = temperatures_lists[3]
@@ -132,12 +134,11 @@ def plotGraph_tempEvolution_70vs90vsLast10Years():
     plt.title("Evolución de la temperatura media")
     plt.show()
 
-
-#graphTempMed_Last30Years()
+#barGraph_precipitaciones_Last30Years()
+graphTempMed_Last30Years()
 #graph_3Anyos_TempMediaMasAlta()
 #graph_3Anyos_TempMasBaja()
-#graph_precipitaciones_Last30Years()
 #pieGraph_mediaPrecp_70vs80vsLast10()
-plotGraph_tempEvolution_70vs90vsLast10Years()
+#plotGraph_tempEvolution_70vs90vsLast10Years()
 
 
