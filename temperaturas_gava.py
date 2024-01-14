@@ -25,7 +25,7 @@ def getTemperaturaMedia_MaxMin_anual(year, dates, dicc):
 def getTempMedia_anual(tempMediaMax, tempMediaMin):
     return (tempMediaMax+tempMediaMin)/2
 
-def getLists_temps_MaxMinMed(years, dates, dicc_tempMax, dicc_tempMin):
+def getListsDecada_tempsMediaAnuales_MaxMinMed(years, dates, dicc_tempMax, dicc_tempMin):
     list_tempMaxMed = []
     list_tempMinMed = []
     list_temMeanMed = []

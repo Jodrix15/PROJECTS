@@ -13,15 +13,15 @@ def data_temperaturasMedia_last30years(rangoAnyo, msj):
 
     if rangoAnyo == 30:
         years = [y for y in range(1993, 2024)]
-        listas_temperaturas = tg.getLists_temps_MaxMinMed(years, dates, dicc_tempMax, dicc_tempMin)
+        listas_temperaturas = tg.getListsDecada_tempsMediaAnuales_MaxMinMed(years, dates, dicc_tempMax, dicc_tempMin)
 
     elif rangoAnyo == 90:
         years = [y for y in range(1990, 2000)]
-        listas_temperaturas = tg.getLists_temps_MaxMinMed(years, dates, dicc_tempMax, dicc_tempMin)
+        listas_temperaturas = tg.getListsDecada_tempsMediaAnuales_MaxMinMed(years, dates, dicc_tempMax, dicc_tempMin)
 
     elif rangoAnyo == 10:
         years = [y for y in range(2013, 2024)]
-        listas_temperaturas = tg.getLists_temps_MaxMinMed(years, dates, dicc_tempMax, dicc_tempMin)
+        listas_temperaturas = tg.getListsDecada_tempsMediaAnuales_MaxMinMed(years, dates, dicc_tempMax, dicc_tempMin)
 
     else:
         print("ERROR. Algo inesperado ha ocurrido")
@@ -52,18 +52,18 @@ def data_sumPrecipitiaciones_last30Years(rangoAnyos, msj):
 
     if rangoAnyos == 30:
         years = [y for y in range(1993, 2024)]
-        sumPre = pg.getPrecipitationsList(dates, precpList, years)
-        media = pg.getPrecipitationsMedia(sumPre)
+        sumPre = pg.getListaDecada_precipitacionesAnuales(dates, precpList, years)
+        media = pg.getPrecipitacionMedia_decada(sumPre)
 
     elif rangoAnyos == 90:
         years = [y for y in range(1990, 2000)]
-        sumPre = pg.getPrecipitationsList(dates, precpList, years)
-        media = pg.getPrecipitationsMedia(sumPre)
+        sumPre = pg.getListaDecada_precipitacionesAnuales(dates, precpList, years)
+        media = pg.getPrecipitacionMedia_decada(sumPre)
 
     elif rangoAnyos == 10:
-        years = [y for y in range(2023, 2012, -1)]
-        sumPre = pg.getPrecipitationsList(dates, precpList, years)
-        media = pg.getPrecipitationsMedia(sumPre)
+        years = [y for y in range(2013, 2024)]
+        sumPre = pg.getListaDecada_precipitacionesAnuales(dates, precpList, years)
+        media = pg.getPrecipitacionMedia_decada(sumPre)
 
     else:
         print("ERROR. Algo has salido mal...")

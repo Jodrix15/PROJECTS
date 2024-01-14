@@ -11,7 +11,7 @@ def getDicc_precipitation_last30Years():
     response = r.get(url)
     return response.json()
 
-def sumPrecipitations_byYear(fecha, dates, precpList):
+def sumPrecipitations_anual(fecha, dates, precpList):
 
     sumPrecipitation = 0
 
@@ -22,14 +22,14 @@ def sumPrecipitations_byYear(fecha, dates, precpList):
 
     return sumPrecipitation
 
-def getPrecipitationsList(dates, precpList, years):
+def getListaDecada_precipitacionesAnuales(dates, precpList, years):
     sumPre = []
 
     for y in years:
-        sumPrecipitationYear = sumPrecipitations_byYear(str(y), dates, precpList)
+        sumPrecipitationYear = sumPrecipitations_anual(str(y), dates, precpList)
         sumPre.append(sumPrecipitationYear)
 
     return sumPre
 
-def getPrecipitationsMedia(precpList):
+def getPrecipitacionMedia_decada(precpList):
     return sum(precpList) / len(precpList)
