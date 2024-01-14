@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-import clima_gava as cg
+import data_gava as cg
 
 dicc = {
     "daily": {
