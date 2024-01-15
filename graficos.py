@@ -2,6 +2,7 @@ import clima_gava as cg
 import temperaturas as t
 import matplotlib.pyplot as plt
 import numpy as np
+import precipitaciones as p
 
 def barGraph_temperatures_last30Years():
     dicc = cg.getFile("cargando..", "temperataras_last30years.json", cg.getDicc_temperature_last30Years())
@@ -33,5 +34,25 @@ def barGraph_temperatures_last30Years():
     plt.show()
 
 def barPrecipitaciones_last30Years():
-    
+    dicc = cg.getFile("cargando..", "precipitaciones_last30years.json", cg.getDicc_Precipitation_last30Years())
+    listaPrecipitaciones = dicc["daily"]["precipitation_sum"]
+    dates = dicc["daily"]["time"]
+    years = [y for y in range(1993, 2024)]
+    lluvias = []
+    for i in years:
+        lluvias.append(p.sumaPrecipitaciones(str(i), dates, listaPrecipitaciones))
+    mediaLluvias = sum(lluvias)/len(lluvias)
+    indice = np.arange(1993, 2024)
+
+    fig, ax = plt.subplots()
+    ax.bar(indice, lluvias)
+    ax.axhline(mediaLluvias, color="red")
+    plt.show()
+
+barPrecipitaciones_last30Years()
+
+
+
+
+
 
