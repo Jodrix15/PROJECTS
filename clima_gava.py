@@ -17,69 +17,24 @@ def getDicc_temperature_the70s():
     return response.json()
 
 def getDicc_temperature_last30Years():
-    url = "https://archive-api.open-meteo.com/v1/archive?latitude=41.306&longitude=2.002&start_date=1990-01-01&end_date=2023-12-31&daily=temperature_2m_max,temperature_2m_min&timezone=Europe%2FBerlin"
+    url = "https://archive-api.open-meteo.com/v1/archive?latitude=41.306&longitude=2.002&start_date=1993-01-01&end_date=2023-12-31&daily=temperature_2m_max,temperature_2m_min&timezone=Europe%2FBerlin"
     response = r.get(url)
     return response.json()
 
-def get_precipitationFile_the70s(msj):
+def getFile(msj, nameFile, getDicc):
     try:
         print(msj)
-        with open("dicc_precipitation_the70s.json", "r") as dicc_precipitationFile:
-            dicc_precipitation = js.load(dicc_precipitationFile)
+        with open(nameFile, "r") as dicc_File:
+            dicc = js.load(dicc_File)
 
     except FileNotFoundError:
         print("El fichero no existe. Creando fichero...")
-        dicc_precipitation = getDicc_Precipitation_the70s()
+        dicc = getDicc
 
-        with open("dicc_precipitation_the70s.json", "w") as dicc_precipitationFile:
-            js.dump(dicc_precipitation, dicc_precipitationFile, indent=3)
+        with open(nameFile, "w") as dicc_temperatureFile:
+            js.dump(dicc, dicc_temperatureFile, indent=3)
 
-    return dicc_precipitation
-
-def get_precipitationFile_last30Years(msj):
-    try:
-        print(msj)
-        with open("dicc_precipitation_last30years.json", "r") as dicc_precipitationFile:
-            dicc_precipitation = js.load(dicc_precipitationFile)
-
-    except FileNotFoundError:
-        print("El fichero no existe. Creando fichero...")
-        dicc_precipitation = getDicc_Precipitation_last30Years()
-
-        with open("dicc_precipitation_last30years.json", "w") as dicc_precipitationFile:
-            js.dump(dicc_precipitation, dicc_precipitationFile, indent=3)
-
-    return dicc_precipitation
-
-def get_temperatureFile_the70s(msj):
-    try:
-        print("Cargando diccionario de temperaturas de los años 70...")
-        with open("dicc_temperature_the70s.json", "r") as dicc_temperatureFile:
-            dicc_temperature = js.load(dicc_temperatureFile)
-
-    except FileNotFoundError:
-        print("El fichero no existe. Creando fichero...")
-        dicc_temperature = getDicc_temperature_the70s()
-
-        with open("dicc_temperature_the70s.json", "w") as dicc_temperatureFile:
-            js.dump(dicc_temperature, dicc_temperatureFile, indent=3)
-
-    return dicc_temperature
-
-def get_temperatureFile_last30years(msj):
-    try:
-        print("Cargando diccionario de temperaturas de los últimos 30 años...")
-        with open("dicc_temperature_last30years.json", "r") as dicc_temperatureFile:
-            dicc_temperature = js.load(dicc_temperatureFile)
-
-    except FileNotFoundError:
-        print("El fichero no existe. Creando fichero...")
-        dicc_temperature = getDicc_temperature_last30Years()
-
-        with open("dicc_temperature_last30years.json", "w") as dicc_temperatureFile:
-            js.dump(dicc_temperature, dicc_temperatureFile, indent=3)
-
-    return dicc_temperature
+    return dicc
 
 
 def getMediaTempMin_byYear(year, dates, dicc_tempMin):
@@ -252,5 +207,5 @@ def data_sumpPrecipitaciones_70vs90vsLast10():
 
     return [media_sumPrecp_70s, media_sumPrecp_90s, media_sumPrecp_last10Years]
 
-print(data_temperaturaMedia_70vs90vsLast10())
+
 
