@@ -84,9 +84,6 @@ def graph_3Anyos_TempMediaMasAlta():
     plt.title("Top 3 - Años con la temperatura más alta")
     plt.show()
 
-    print(anyos)
-    print(temperaturas)
-
 
 def graph_3Anyos_TempMasBaja():
     RANGO_ANYOS = 30
@@ -119,8 +116,6 @@ def graph_3Anyos_TempMasBaja():
     plt.title("Top 3 - Años con la temperatura más baja")
     plt.show()
 
-    print(anyos)
-    print(temperaturas)
 
 def plotGraph_tempEvolution_70vs90vsLast10Years():
 

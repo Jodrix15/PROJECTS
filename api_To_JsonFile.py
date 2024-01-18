@@ -1,4 +1,4 @@
-import requests as r
+
 import json as js
 
 def getFile(msj, nameFile, dicc):
@@ -12,8 +12,9 @@ def getFile(msj, nameFile, dicc):
 
         dicc_data = dicc
 
-        with open(nameFile, "w") as dicc_precipitationFile:
-            js.dump(dicc_data, dicc_precipitationFile, indent=3)
+        with open(nameFile, "w") as dicc_dataFile:
+            js.dump(dicc_data, dicc_dataFile, indent=3)
 
     return dicc_data
+
 

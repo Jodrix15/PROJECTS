@@ -1,5 +1,4 @@
 import requests as r
-import json as js
 
 def getDicc_precipitation_the70s():
     url = "https://archive-api.open-meteo.com/v1/archive?latitude=41.300526&longitude=2.0659971&start_date=1970-01-01&end_date=1979-12-31&daily=precipitation_sum&timezone=Europe%2FBerlin"

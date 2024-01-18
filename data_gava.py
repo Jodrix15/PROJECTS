@@ -1,5 +1,4 @@
-import requests as r
-import json as js
+
 import api_To_JsonFile as aj
 import precipitaciones_gava as pg
 import temperaturas_gava as tg

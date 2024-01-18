@@ -1,5 +1,4 @@
 import requests as r
-import json as js
 
 
 def getDicc_temperature_the70s():
