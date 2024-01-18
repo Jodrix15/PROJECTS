@@ -54,11 +54,6 @@ def data_sumPrecipitiaciones_last30Years(rangoAnyos, msj):
         sumPre = pg.getListaDecada_precipitacionesAnuales(dates, precpList, years)
         media = pg.getPrecipitacionMedia_decada(sumPre)
 
-    elif rangoAnyos == 90:
-        years = [y for y in range(1990, 2000)]
-        sumPre = pg.getListaDecada_precipitacionesAnuales(dates, precpList, years)
-        media = pg.getPrecipitacionMedia_decada(sumPre)
-
     elif rangoAnyos == 10:
         years = [y for y in range(2013, 2024)]
         sumPre = pg.getListaDecada_precipitacionesAnuales(dates, precpList, years)
@@ -72,20 +67,25 @@ def data_sumPrecipitiaciones_last30Years(rangoAnyos, msj):
 
     return [sumPre, media, years]
 
-def data_sumpPrecipitaciones_70vs90vsLast10():
+def data_sumpPrecipitaciones_50vs70vsLast10():
     ONE_DECADE = 10
-    data_precp_90 = data_sumPrecipitiaciones_last30Years(90, "Cargando diccionario de temperaturas de los años 90...")
-    data_precp_last10Years = data_sumPrecipitiaciones_last30Years(10, "Cargando diccionario de temperaturas de los últimos 10 años...")
+    #Ultimos 10 años
+    data_precp_last10Years = data_sumPrecipitiaciones_last30Years(10, "Cargando diccionario de precipitaciones de los últimos 10 años...")
 
     #Los 70
-    dicc_sumPrecipitations_70s = aj.getFile("Cargando diccionario de temperaturas de los años 70...", "dicc_precipitation_the70s.json", pg.getDicc_precipitation_the70s())
+    dicc_sumPrecipitations_70s = aj.getFile("Cargando diccionario de precipitaciones de los años 70...", "dicc_precipitation_the70s.json", pg.getDicc_precipitation_the70s())
     sumPrecipitation_70s = sum(dicc_sumPrecipitations_70s["daily"]["precipitation_sum"])
 
+    #Los 50
+    dicc_sumPrecipitations_50s =aj.getFile("Cargando diccionario de precipitaciones de los años 50", "dicc_precipitation_the50s.json", pg.getDicc_precipitation_the50s())
+    sumPrecipitation_50s = sum(dicc_sumPrecipitations_50s["daily"]["precipitation_sum"])
     #Medias de las décadas
+
+    #Calculo medias
+    media_sumPrecp_50s = sumPrecipitation_50s / ONE_DECADE
     media_sumPrecp_70s = sumPrecipitation_70s / ONE_DECADE
-    media_sumPrecp_90s = data_precp_90[1]
     media_sumPrecp_last10Years = data_precp_last10Years[1]
 
-    return [media_sumPrecp_70s, media_sumPrecp_90s, media_sumPrecp_last10Years]
+    return [media_sumPrecp_50s, media_sumPrecp_70s, media_sumPrecp_last10Years]
 
 
