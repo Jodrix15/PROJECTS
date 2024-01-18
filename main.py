@@ -1,32 +1,29 @@
-import sys
 import grafics_gava as gg
+import sys
 
 def help():
-    print("adeu")
+    print("[estudio_1] - Gráfico de barras de los últimos 30 años")
 
-def graficas(numEstudio):
 
-    if numEstudio == 1:
+def estudio(opcion):
+
+    if opcion == "1":
         gg.barGraph_precipitaciones_Last30Years()
+    else:
+        print("Opcion no válida")
 
 
 def main():
     args = sys.argv
+    opcion = args[1][-1]
 
-    if len(args) != 2:
-        print("ERROR. DEBE HABER ÚNICAMENTE UN ARGUMENTO")
+    if args[1].lower() == "help":
+        help()
+
+    elif args[1].lower() == f"estudio_{opcion}":
+        estudio(opcion)
     else:
-        num = args[1].strip()[-1]
-        if args[1].lower() == "help":
-            help()
+        print("Opcion no válida")
 
-        elif args[1].lower() == f"estudio_{num}":
-            if num in ["1", "2", "3", "4", "5", "6"]:
-                graficas(int(num))
-            else:
-                print("Opcion no válida")
-
-        else:
-            print("Opcion no válida")
 
 main()
