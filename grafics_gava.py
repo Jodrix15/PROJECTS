@@ -13,26 +13,27 @@ def barGraph_precipitaciones_Last30Years():
 
     plt.bar(years, sumPre)
     plt.subplot()
-    plt.xlabel("Year")
-    plt.ylabel("Suma Precp. Anual (mm)")
-    plt.axhline(y=media, color="red")
+    plt.xlabel("Años")
+    plt.ylabel("(mm)")
+    plt.title("Suma precipitaciones anual")
+    plt.axhline(y=media, color="red", linewidth=2)
 
     plt.show()
 
-def pieGraph_mediaPrecp_70vs80vsLast10():
-    dataList = cg.data_sumpPrecipitaciones_70vs90vsLast10()
-    media_70s = dataList[0]
-    media_90s = dataList[1]
+def pieGraph_mediaPrecp_50vs70vsLast10():
+    dataList = cg.data_sumpPrecipitaciones_50vs70vsLast10()
+    media_70s = dataList[1]
+    media_50s = dataList[0]
     media_last10Years = dataList[2]
-    total = media_70s + media_90s + media_last10Years
-    porcentajes = [media_70s/total*100, media_90s/total*100, media_last10Years/total*100]
-    colores = ["#2E5B88", "#B9DDF1", "#73A4CA"]
+    total = media_70s + media_50s + media_last10Years
+    porcentajes = [media_50s/total*100, media_70s/total*100, media_last10Years/total*100]
+    colores = ["#B9DDF1", "#2E5B88", "#73A4CA"]
 
-    labels = ["Los 70s", "Los 90s", "Últimos 10 años"]
+    labels = ["Los 50s", "Los 70s", "Últimos 10 años"]
     langs = [f"{porcentajes[0]:.2f}%", f"{porcentajes[1]:.2f}%", f"{porcentajes[2]:.2f}%"]
     plt.pie(dataList, labels=langs, colors = colores)
     plt.title("% de la media de precipitaciones totales en tres décadas aisladas")
-    plt.legend(labels,loc='upper center', bbox_to_anchor=(1, 0.9))
+    plt.legend(labels,loc='upper center', bbox_to_anchor=(1.1, 0.9))
 
     plt.show()
 
@@ -134,7 +135,7 @@ def plotGraph_tempEvolution_70vs90vsLast10Years():
 #graphTempMed_Last30Years()
 #graph_3Anyos_TempMediaMasAlta()
 #graph_3Anyos_TempMasBaja()
-#pieGraph_mediaPrecp_70vs80vsLast10()
+pieGraph_mediaPrecp_50vs70vsLast10()
 #plotGraph_tempEvolution_70vs90vsLast10Years()
 
 
