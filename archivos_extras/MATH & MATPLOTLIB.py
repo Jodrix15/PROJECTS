@@ -1,3 +1,4 @@
+import math
 import math as m
 import numpy as np
 import matplotlib.pyplot as plt
@@ -47,11 +48,21 @@ def grafQuesos():
     #plt.pie(votes, labels=langs)
     plt.show()
 
+def grafic_proyecte():
+    ejeX = [x/100 for x in range(700)]
+    ejeY = [math.sin(x) for x in ejeX]
+
+    dibuix,axes = plt.subplots()
+    axes.plot(ejeX, ejeY)
+
+    plt.show()
+
 
 #graficoPuntos()
 #graficoLinea()
 #grafBarras()
-grafHistograma()
-#grafQuesos()
+#grafHistograma()
+grafQuesos()
+#grafic_proyecte()
 
 
