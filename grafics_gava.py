@@ -10,28 +10,31 @@ def barGraph_precipitaciones_Last30Years():
     years = data_precp[2]
     sumPre = data_precp[0]
     media = data_precp[1]
+    labels = [f"media = {media:.2f} mm"]
 
     plt.bar(years, sumPre)
     plt.subplot()
     plt.xlabel("Años")
-    plt.ylabel("(mm)")
+    plt.ylabel("Precipitaciones (mm)")
     plt.title("Suma precipitaciones anual")
     plt.axhline(y=media, color="red", linewidth=2)
+    plt.legend(labels)
 
     plt.show()
 
 def pieGraph_mediaPrecp_50vs70vsLast10():
-    dataList = cg.data_sumpPrecipitaciones_50vs70vsLast10()
+    dataList = cg.data_mediaPrecipitaciones_50vs70vsLast10()
     media_70s = dataList[1]
     media_50s = dataList[0]
     media_last10Years = dataList[2]
     total = media_70s + media_50s + media_last10Years
     porcentajes = [media_50s/total*100, media_70s/total*100, media_last10Years/total*100]
-    colores = ["#B9DDF1", "#2E5B88", "#73A4CA"]
+    colores = ["#B9DDF1", "#73A4CA", "#2E5B88"]
+    #colores = ["#F1E5D8", "#6096AA", "#29738F"]
 
     labels = ["Los 50s", "Los 70s", "Últimos 10 años"]
-    langs = [f"{porcentajes[0]:.2f}%", f"{porcentajes[1]:.2f}%", f"{porcentajes[2]:.2f}%"]
-    plt.pie(dataList, labels=langs, colors = colores)
+    #langs = [f"{porcentajes[0]:.2f}%", f"{porcentajes[1]:.2f}%", f"{porcentajes[2]:.2f}%"]
+    plt.pie(dataList, autopct='%1.1f%%', colors = colores)
     plt.title("% de la media de precipitaciones totales en tres décadas aisladas")
     plt.legend(labels,loc='upper center', bbox_to_anchor=(1.1, 0.9))
 
@@ -54,7 +57,7 @@ def graphTempMed_Last30Years():
 
     plt.show()
 
-def graph_3Anyos_TempMediaMasAlta():
+def graph_top3_TempMediaMasAlta_last30Years():
     RANGO_ANYOS = 30
     temperatures_lists = cg.data_temperaturasMedia_last30years(RANGO_ANYOS, "Cargando diccionario de temperaturas de los últimos 30 años...")
     anyos = []
@@ -86,7 +89,7 @@ def graph_3Anyos_TempMediaMasAlta():
     plt.show()
 
 
-def graph_3Anyos_TempMasBaja():
+def graph_top3_TempMasBaja_last30Years():
     RANGO_ANYOS = 30
     temperatures_lists = cg.data_temperaturasMedia_last30years(RANGO_ANYOS, "Cargando diccionario de temperaturas de los últimos 30 años...")
     anyos = []
@@ -120,14 +123,21 @@ def graph_3Anyos_TempMasBaja():
 
 def plotGraph_tempEvolution_70vs90vsLast10Years():
 
-    data = cg.data_temperaturaMedia_70vs90vsLast10()
+    data = cg.data_temperaturaMedia_50vs70vsLast10()
 
     ejeX = ["Los 70s", "Los 90s", "Últimos 10 años"]
     ejeY = [data[0], data[1], data[2]]
 
-    plt.plot(ejeX, ejeY)
-    plt.scatter(ejeX, ejeY)
+
+    plt.plot(ejeX, ejeY, color="orange")
+    plt.scatter(ejeX, ejeY, color="red")
+    plt.ylabel("Grados (ºC)")
+    plt.xlabel("Años (Por Décadas)")
     plt.title("Evolución de la temperatura media")
+    plt.show()
+
+def barGraph_bySeasons():
+
     plt.show()
 
 
@@ -135,7 +145,7 @@ def plotGraph_tempEvolution_70vs90vsLast10Years():
 #graphTempMed_Last30Years()
 #graph_3Anyos_TempMediaMasAlta()
 #graph_3Anyos_TempMasBaja()
-pieGraph_mediaPrecp_50vs70vsLast10()
+#pieGraph_mediaPrecp_50vs70vsLast10()
 #plotGraph_tempEvolution_70vs90vsLast10Years()
 
 
