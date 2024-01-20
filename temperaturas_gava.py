@@ -53,8 +53,9 @@ def getLists_tempsMediaAnuales_MaxMinMed(years, list_dates, list_tempMax, list_t
 
     return [list_tempMaxMed, list_tempMinMed, list_temMeanMed]
 
-def getTempMedia_rangoAños(tempMediaList):
+def getTempMedia_rangoAnyos(tempMediaList):
     '''Esta función recibe como argumento una lista de temperaturas medias en un rango de años determinado y devuelve
     la temperatura media en ese rango de años'''
 
     return sum(tempMediaList)/len(tempMediaList)
+

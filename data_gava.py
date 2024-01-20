@@ -13,6 +13,7 @@ def data_temperaturasMedia_last30years(rangoAnyo, msj):
     list_tempMin = dicc_temperature["daily"]["temperature_2m_min"]
     list_tempMax = dicc_temperature["daily"]["temperature_2m_max"]
 
+
     if rangoAnyo == 30: #últimos 30 años
         years = [y for y in range(1993, 2024)]
         listas_temperaturas = tg.getLists_tempsMediaAnuales_MaxMinMed(years, list_dates, list_tempMax, list_tempMin)
@@ -28,8 +29,9 @@ def data_temperaturasMedia_last30years(rangoAnyo, msj):
     else:
         print("ERROR. Algo inesperado ha ocurrido")
         listas_temperaturas = []
+        years = []
 
-    return listas_temperaturas
+    return listas_temperaturas, years
 
 def data_temperaturaMedia_50vs70vsLast10():
     '''Esta función devuelve una lista con los datos de la media de las temperaturas en tres décadas aisladas'''
@@ -39,12 +41,12 @@ def data_temperaturaMedia_50vs70vsLast10():
     dicc_temperature_the70s = aj.getFile("Cargando diccionario de temperaturas de los años 70...", "dicc_temperature_the70s.json", tg.getDicc_temperature_the70s())
 
     listTempMedia_70s = dicc_temperature_the70s["daily"]["temperature_2m_mean"]
-    listTempMedia_90s = dicc_temperature_the90s[2]
-    listTempMedia_last10Years = dicc_temperature_last10Years[2]
+    listTempMedia_90s = dicc_temperature_the90s[0][2]
+    listTempMedia_last10Years = dicc_temperature_last10Years[0][2]
 
-    media_70s = tg.getTempMedia_rangoAños(listTempMedia_70s)
-    media_90s = tg.getTempMedia_rangoAños(listTempMedia_90s)
-    media_last10Years = tg.getTempMedia_rangoAños(listTempMedia_last10Years)
+    media_70s = tg.getTempMedia_rangoAnyos(listTempMedia_70s)
+    media_90s = tg.getTempMedia_rangoAnyos(listTempMedia_90s)
+    media_last10Years = tg.getTempMedia_rangoAnyos(listTempMedia_last10Years)
 
     return [media_70s, media_90s, media_last10Years]
 

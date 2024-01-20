@@ -30,26 +30,25 @@ def pieGraph_mediaPrecp_50vs70vsLast10():
     total = media_70s + media_50s + media_last10Years
     porcentajes = [media_50s/total*100, media_70s/total*100, media_last10Years/total*100]
     colores = ["#B9DDF1", "#73A4CA", "#2E5B88"]
-    #colores = ["#F1E5D8", "#6096AA", "#29738F"]
 
     labels = ["Los 50s", "Los 70s", "Últimos 10 años"]
-    #langs = [f"{porcentajes[0]:.2f}%", f"{porcentajes[1]:.2f}%", f"{porcentajes[2]:.2f}%"]
-    plt.pie(dataList, autopct='%1.1f%%', colors = colores)
+    langs = [f"{porcentajes[0]:.2f}%", f"{porcentajes[1]:.2f}%", f"{porcentajes[2]:.2f}%"]
+    plt.pie(dataList, labels = langs, colors = colores)
     plt.title("% de la media de precipitaciones totales en tres décadas aisladas")
     plt.legend(labels,loc='upper center', bbox_to_anchor=(1.1, 0.9))
 
     plt.show()
 
-def graphTempMed_Last30Years():
+def barGraphTempMed_Last30Years():
     RANGO_ANYOS = 30
-    temperatures_lists = cg.data_temperaturasMedia_last30years(RANGO_ANYOS, "Cargando diccionario de temperaturas de los últimos 30 años...")
+    temperatures_lists = cg.data_temperaturasMedia_last30years(RANGO_ANYOS, "Cargando diccionario de temperaturas de los últimos 30 años...")[0]
     ancho_barra = 0.4
     indice = np.arange(1993, 2024)
 
     fig, ax =plt.subplots()
     ax.bar(indice+0.2, temperatures_lists[0], width = ancho_barra, label='Temperatura media máxima', align="center")
     ax.bar(indice-0.2, temperatures_lists[1],  width = ancho_barra, label='Temperatura media mínima')
-    ax.plot(indice, temperatures_lists[2], color="yellow", label="Temperatura media total")
+    ax.plot(indice, temperatures_lists[2], color="red", label="Temperatura media total")
 
     plt.xlabel('Años', ha="center")
     plt.ylabel('Temperatura (ºC)')
@@ -57,94 +56,69 @@ def graphTempMed_Last30Years():
 
     plt.show()
 
-def graph_top3_TempMediaMasAlta_last30Years():
+
+def top3Graph_TempMediaMasAltaYBaja_last30Years():
     RANGO_ANYOS = 30
-    temperatures_lists = cg.data_temperaturasMedia_last30years(RANGO_ANYOS, "Cargando diccionario de temperaturas de los últimos 30 años...")
-    anyos = []
-    temperaturas = []
-    list_30years = temperatures_lists[3]
-    list_tempMediaMax = temperatures_lists[2]
+    temperatures_lists, anyos = cg.data_temperaturasMedia_last30years(RANGO_ANYOS,
+                                                                      "Cargando diccionario de temperaturas de los últimos 30 años...")
+    tempMedia = temperatures_lists[2]
 
-    for num_anyos in range(3):
-        tempMax = None
-        for i in range(len(list_tempMediaMax)):
+    for i in range(len(tempMedia)):
+        for j in range(i + 1, len(tempMedia)):
+            if tempMedia[i] > tempMedia[j]:
+                aux = tempMedia[i]
+                tempMedia[i] = tempMedia[j]
+                tempMedia[j] = aux
 
-            if (tempMax is None or list_tempMediaMax[i] >= tempMax) and list_30years[i] not in anyos and len(anyos)<3:
-                tempMax = list_tempMediaMax[i]
-                aux = i
+                aux = anyos[i]
+                anyos[i] = anyos[j]
+                anyos[j] = aux
 
-        anyos.append(list_30years[aux])
-        temperaturas.append(list_tempMediaMax[aux])
+    top3Alta = [anyos[-1], anyos[-2], anyos[-3]]
+    top3Baja = [anyos[0], anyos[1], anyos[2]]
 
     anchoBarras = 1
     valores_x = [2, 1, 3]
     valores_y = [8, 5, 3]
 
-    plt.bar(valores_x, valores_y, anchoBarras, color=['red', 'green', 'blue'])
-    plt.xticks(valores_x, anyos)
-    plt.xlabel('Categorías')
-    plt.yticks([])
+    fig, (ax1, ax2) = plt.subplots(1, 2)
 
-    plt.title("Top 3 - Años con la temperatura más alta")
+    ax1.bar(valores_x, valores_y, anchoBarras, color=['#c89a3c', '#758087', '#a05822'])
+
+    ax1.set_xticks(valores_x, top3Alta)
+    ax1.set_xlabel('Categorías')
+    ax1.set_yticks([])
+    ax1.set_title("Top 3 - Años con la temperatura más alta")
+
+    ax2.bar(valores_x, valores_y, anchoBarras, color=['#c89a3c', '#758087', '#a05822'])
+    ax2.set_xticks(valores_x, top3Baja)
+    ax2.set_xlabel('Categorías')
+    ax2.set_yticks([])
+    ax2.set_title("Top 3 - Años con la temperatura más baja")
+
+    plt.tight_layout()
     plt.show()
-
-
-def graph_top3_TempMasBaja_last30Years():
-    RANGO_ANYOS = 30
-    temperatures_lists = cg.data_temperaturasMedia_last30years(RANGO_ANYOS, "Cargando diccionario de temperaturas de los últimos 30 años...")
-    anyos = []
-    temperaturas = []
-    list_30years = temperatures_lists[3]
-    list_tempMediaMin = temperatures_lists[2]
-
-    for num_anyos in range(3):
-        tempMin = None
-        aux = -1
-        for i in range(len(list_tempMediaMin)):
-
-            if (tempMin is None or list_tempMediaMin[i] <= tempMin) and list_30years[i] not in anyos and len(anyos) < 3:
-                tempMin = list_tempMediaMin[i]
-                aux = i
-
-        anyos.append(list_30years[aux])
-        temperaturas.append(list_tempMediaMin[aux])
-
-    valores_x = [2, 1, 3]
-    valores_y = [10, 5, 2]
-
-    plt.bar(valores_x, valores_y, color=['red', 'green', 'blue'])
-    plt.xticks(valores_x, anyos)
-    plt.xlabel('Categorías')
-    plt.yticks([])
-
-    plt.title("Top 3 - Años con la temperatura más baja")
-    plt.show()
-
 
 def plotGraph_tempEvolution_70vs90vsLast10Years():
 
-    data = cg.data_temperaturaMedia_50vs70vsLast10()
+    data= cg.data_temperaturaMedia_50vs70vsLast10()
 
     ejeX = ["Los 70s", "Los 90s", "Últimos 10 años"]
     ejeY = [data[0], data[1], data[2]]
 
+    fig, ax = plt.subplots()
+    ax.scatter(ejeX, ejeY, color="red")
+    ax.plot(ejeX, ejeY, color="orange", linewidth = 2)
 
-    plt.plot(ejeX, ejeY, color="orange")
-    plt.scatter(ejeX, ejeY, color="red")
     plt.ylabel("Grados (ºC)")
     plt.xlabel("Años (Por Décadas)")
     plt.title("Evolución de la temperatura media")
     plt.show()
 
-def barGraph_bySeasons():
-
-    plt.show()
-
 
 #barGraph_precipitaciones_Last30Years()
-#graphTempMed_Last30Years()
-#graph_3Anyos_TempMediaMasAlta()
-#graph_3Anyos_TempMasBaja()
+#barGraphTempMed_Last30Years()
+#top3Graph_TempMediaMasAltaYBaja_last30Years()
 #pieGraph_mediaPrecp_50vs70vsLast10()
 #plotGraph_tempEvolution_70vs90vsLast10Years()
 
