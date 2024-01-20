@@ -101,4 +101,3 @@ def data_mediaPrecipitaciones_50vs70vsLast10():
     media_sumPrecp_last10Years = data_precp_last10Years[1]
 
     return [media_sumPrecp_50s, media_sumPrecp_70s, media_sumPrecp_last10Years]
-

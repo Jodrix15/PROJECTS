@@ -1,6 +1,7 @@
 import data_gava as cg
 import matplotlib.pyplot as plt
 import numpy as np
+import prueba as p
 
 def barGraph_precipitaciones_Last30Years():
 
@@ -114,6 +115,7 @@ def plotGraph_tempEvolution_70vs90vsLast10Years():
     plt.xlabel("Años (Por Décadas)")
     plt.title("Evolución de la temperatura media")
     plt.show()
+
 
 
 #barGraph_precipitaciones_Last30Years()

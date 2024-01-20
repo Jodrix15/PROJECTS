@@ -46,4 +46,9 @@ def getLista_precipitacionesAnuales(dates, precpList, years):
 def getPrecipitacionMedia(precpList):
     '''Esta función devuelve la media de las precipitaciones en un rango de años determinado'''
 
-    return sum(precpList) / len(precpList)
+    if len(precpList) == 0:
+        result = 0
+    else:
+        result = sum(precpList) / len(precpList)
+
+    return result

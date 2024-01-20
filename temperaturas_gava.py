@@ -23,10 +23,15 @@ def getTemperaturaMedia_MaxMin_anual(year, datesList, tempList):
     temperatura_x_dia = []
 
     for i in range(len(datesList)):
-        if year in datesList[i]:
+        if year in datesList[i] and tempList != None:
             temperatura_x_dia.append(tempList[i])
 
-    return sum(temperatura_x_dia) / len(temperatura_x_dia)
+    if len(temperatura_x_dia) == 0:
+        result = 0
+    else:
+        result = sum(temperatura_x_dia) / len(temperatura_x_dia)
+
+    return result
 
 def getTempMedia_anual(tempMediaMax, tempMediaMin):
     '''Esta función recibe como argumento la media de las temperaturas máximas y mmínimas de un año y devuelve
@@ -57,5 +62,10 @@ def getTempMedia_rangoAnyos(tempMediaList):
     '''Esta función recibe como argumento una lista de temperaturas medias en un rango de años determinado y devuelve
     la temperatura media en ese rango de años'''
 
-    return sum(tempMediaList)/len(tempMediaList)
+    if len(tempMediaList) == 0:
+        result = 0
+    else:
+        result = sum(tempMediaList)/len(tempMediaList)
+
+    return result
 
