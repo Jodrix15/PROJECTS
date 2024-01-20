@@ -1,7 +1,7 @@
 import data_gava as cg
 import matplotlib.pyplot as plt
 import numpy as np
-import prueba as p
+
 
 def barGraph_precipitaciones_Last30Years():
 

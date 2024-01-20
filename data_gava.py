@@ -81,23 +81,27 @@ def data_mediaPrecipitaciones_50vs70vsLast10():
     '''Esta función devuelve una lista con los datos de la media de las precipitaciones en tres
     décadas aisladas'''
 
-
-    ONE_DECADE = 10
-
     #Ultimos 10 años
     data_precp_last10Years = data_sumPrecipitiaciones_last30Years(10, "Cargando diccionario de precipitaciones de los últimos 10 años...")
 
     #Los 70
     dicc_sumPrecipitations_70s = aj.getFile("Cargando diccionario de precipitaciones de los años 70...", "dicc_precipitation_the70s.json", pg.getDicc_precipitation_the70s())
-    sumPrecipitation_70s = sum(dicc_sumPrecipitations_70s["daily"]["precipitation_sum"])
+    years = [y for y in range(1970, 1979)]
+    sumPre = pg.getLista_precipitacionesAnuales(dicc_sumPrecipitations_70s["daily"]["time"],
+                                                dicc_sumPrecipitations_70s["daily"]["precipitation_sum"],
+                                                years)
 
     #Los 50
     dicc_sumPrecipitations_50s =aj.getFile("Cargando diccionario de precipitaciones de los años 50", "dicc_precipitation_the50s.json", pg.getDicc_precipitation_the50s())
-    sumPrecipitation_50s = sum(dicc_sumPrecipitations_50s["daily"]["precipitation_sum"])
+    years50 = [y for y in range(1950, 1959)]
+    sumPre50 = pg.getLista_precipitacionesAnuales(dicc_sumPrecipitations_50s["daily"]["time"],
+                                                dicc_sumPrecipitations_50s["daily"]["precipitation_sum"],
+                                                  years50)
+
 
     #Medias de las décadas
-    media_sumPrecp_50s = sumPrecipitation_50s / ONE_DECADE
-    media_sumPrecp_70s = sumPrecipitation_70s / ONE_DECADE
+    media_sumPrecp_50s = pg.getPrecipitacionMedia(sumPre50)
+    media_sumPrecp_70s = pg.getPrecipitacionMedia(sumPre)
     media_sumPrecp_last10Years = data_precp_last10Years[1]
 
     return [media_sumPrecp_50s, media_sumPrecp_70s, media_sumPrecp_last10Years]
