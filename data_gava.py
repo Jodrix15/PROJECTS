@@ -4,6 +4,7 @@ import precipitaciones_gava as pg
 import temperaturas_gava as tg
 
 
+
 def data_temperaturasMedia_last30years(rangoAnyo, msj):
     '''Esta función nos devuelve una lista con los datos las listas de las diferentes temperaturas medias en un rango de años
      determinado que recibe como argumento'''
@@ -105,3 +106,52 @@ def data_mediaPrecipitaciones_50vs70vsLast10():
     media_sumPrecp_last10Years = data_precp_last10Years[1]
 
     return [media_sumPrecp_50s, media_sumPrecp_70s, media_sumPrecp_last10Years]
+
+
+def data_temperaturaMedia_Estaciones_70vs90vsLast10():
+    '''Esta función recoge los datos de la temperatura media en las décadas de los 70, 90 y los últimos 10 años'''
+    # Carga de datos
+
+    dicc_temperature = aj.getFile("Cargando diccionario ultimos 30 años...", "dicc_temperatureMean_last30years.json",
+                                  tg.getDicc_temperature_media_last30years())
+
+    dicc_temperature_the70s = aj.getFile("Cargando diccionario de temperaturas de los años 70...",
+                                         "dicc_temperature_the70s.json", tg.getDicc_temperature_the70s())
+
+    # Listas de datos
+    listTempMedia_70s = dicc_temperature_the70s["daily"]
+    listTempMedia_Last30s = dicc_temperature["daily"]
+
+    estaciones = ["Invierno", "Primavera", "Verano", "Otoño"]
+
+    medias_70s = {}
+    for estacion in estaciones:
+        medias_70s[estacion] = tg.getTempMedia_porEstacion(1970, estacion, listTempMedia_70s)
+    # print(medias_70s)
+
+    medias_ultimos_30 = {}
+
+    anyos = [1990, 2000, 2010]  # Años de las últimas 3 décadas
+    for anyo in anyos:
+        medias_anyo = {}
+        for estacion in estaciones:
+            medias_anyo[estacion] = tg.getTempMedia_porEstacion(anyo, estacion, listTempMedia_Last30s)
+        medias_ultimos_30[anyo] = medias_anyo
+
+    return medias_70s, medias_ultimos_30
+
+def data_temperaturaMedia_enNavidad():
+    '''Esta función devuelve una lista de las temperaturas medias en el día de navidad'''
+    dicc_temperature = aj.getFile("Cargando diccionario de los últimos 30 años", "dicc_temperature_last30Years.json", tg.getDicc_temperature_last30Years())
+    list_dates = dicc_temperature["daily"]["time"]
+    list_tempMin = dicc_temperature["daily"]["temperature_2m_min"]
+    list_tempMax = dicc_temperature["daily"]["temperature_2m_max"]
+
+    listaMedia_navidad = []
+
+    for i in range(len(list_dates)):
+        if "12-25" in list_dates[i]:
+            listaMedia_navidad.append((list_tempMax[i]+list_tempMin[i])/2)
+
+    return listaMedia_navidad
+

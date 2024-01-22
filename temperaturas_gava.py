@@ -15,6 +15,13 @@ def getDicc_temperature_last30Years():
     response = r.get(url)
     return response.json()
 
+def getDicc_temperature_media_last30years():
+    '''obtiene una API de la temperartura media de los últimos 30 años y la devuelve como un diccionario'''
+
+    url = "https://archive-api.open-meteo.com/v1/archive?latitude=41.300526&longitude=2.0659971&start_date=1990-01-01&end_date=2023-12-31&daily=temperature_2m_mean&timezone=Europe%2FBerlin"
+    response = r.get(url)
+    return response.json()
+
 def getTemperaturaMedia_MaxMin_anual(year, datesList, tempList):
     '''Esta función recibe como argumento un año, un lista con todas las fechas de un diccionario determinada de temperaturas
      y un lista de temperaturas. Añade en una lista las temperaturas de tempList (lista de temperaturas Máximas/Mínimas)
@@ -68,4 +75,33 @@ def getTempMedia_rangoAnyos(tempMediaList):
         result = sum(tempMediaList)/len(tempMediaList)
 
     return result
+
+
+def estacion(fecha):
+    '''Esta función analiza las fechas de los diccionarios y determina en que estación se encuentra y lo devuelve'''
+    mes = int(fecha.split("-")[1])
+    if mes in [12, 1, 2]:
+        return 'Invierno'
+    elif mes in [3, 4, 5]:
+        return 'Primavera'
+    elif mes in [6, 7, 8]:
+        return 'Verano'
+    return 'Otoño'
+
+
+def getTempMedia_porEstacion(decada, nombre_estacion, datos):
+    '''Esta función calcula y devuelve la temperatura media por estaciones'''
+    temperaturas = []
+    inicio_decada = decada
+    fin_decada = inicio_decada + 10
+
+    for i, fecha in enumerate(datos["time"]):
+        año = int(fecha.split("-")[0])
+        if inicio_decada <= año < fin_decada and estacion(fecha) == nombre_estacion:
+            temperaturas.append(datos["temperature_2m_mean"][i])
+
+    if temperaturas:
+        return sum(temperaturas) / len(temperaturas)
+    else:
+        return None
 
