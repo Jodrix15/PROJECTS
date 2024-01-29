@@ -3,4 +3,4 @@ str = "ho lal"
 
 
 
-print(str.replace(" ", ""))
+print(len(str))
