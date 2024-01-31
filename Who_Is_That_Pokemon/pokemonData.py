@@ -39,10 +39,10 @@ def getImages(poke):
     return plt.show()
 
 def getPokeInfo(poke):
-    print(f"============== {getName(poke)} ==============\n"
+    print(f"============== {getName(poke).upper()} ==============\n"
           f"Identificador: {getId(poke)}\n"
           f"Altura: {getPokemonData(poke)['height']} dm\n"
-          f"Peso: {getPokemonData(poke)['weight']} hm\n"
+          f"Peso: {getPokemonData(poke)['weight']} hg\n"
           f"Tipos: ", end=" ")
 
     for type in getTypes(poke):
@@ -50,5 +50,4 @@ def getPokeInfo(poke):
 
     print(f"\nCadena de evolución: \n"
           f"======================================")
-
 

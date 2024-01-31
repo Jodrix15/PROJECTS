@@ -1,6 +1,13 @@
-str = "ho lal"
 
+libros={"001": {"titulo": "MEC", "Genere": "tragedia"}}
 
+def listG(comando):
+    genere = comando
+    if libros["001"]["Genere"] == genere:
+        print("Hola")
+    else:
+        print("adios")
 
-
-print(len(str))
+opcionInicial = input("> ")
+opcion = opcionInicial.split("-")
+listG(opcion[1:])
