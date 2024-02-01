@@ -1,13 +1,18 @@
+import pokemonData as pd
+import json as js
 
-libros={"001": {"titulo": "MEC", "Genere": "tragedia"}}
+urlPokemonData = "https://pokeapi.co/api/v2/pokemon/"
+urlSpecies = "https://pokeapi.co/api/v2/pokemon-species/"
 
-def listG(comando):
-    genere = comando
-    if libros["001"]["Genere"] == genere:
-        print("Hola")
-    else:
-        print("adios")
+specie = pd.getResponse(urlSpecies, 25)
+specieURL = specie["evolution_chain"]["url"]
+evoluciones = pd.doRequest(specieURL).json()
 
-opcionInicial = input("> ")
-opcion = opcionInicial.split("-")
-listG(opcion[1:])
+print(evoluciones.keys())
+print(js.dumps(evoluciones["chain"], indent=3))
+
+
+
+
+
+
