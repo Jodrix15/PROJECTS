@@ -18,10 +18,8 @@ def getPokemonEvolutions(diccEvolucion):
 
     if len(diccEvolucion["evolves_to"]) != 0:
         evoluciones_dicc = diccEvolucion["evolves_to"][0]
-
         getPokemonEvolutions(evoluciones_dicc)
         evolutionChain.append(diccEvolucion["species"]["name"])
-
     else:
         evolutionChain.append(diccEvolucion["species"]["name"])
 

@@ -15,7 +15,7 @@ def menuDifficulty():
           "1. Fácil\n"
           "2. Normal\n"
           "3. Difícil\n"
-          "4. Ayuda")
+          "4. Ayuda\n")
 
 
 def getOptionInt(opciones):

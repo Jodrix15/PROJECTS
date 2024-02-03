@@ -97,6 +97,12 @@ def startGame():
 
                 if not volverAtras(volver):
                     fallos, intentos, pista = updateInfoGame(isFail, intentos, fallos)
+                    if g.isComplete(pokeSpaces):
+                        finalizar = True
+                        os.system("cls")
+                        print("¡¡¡FELICIDADES, HAS GANADO!!! Aquí tienes los datos del pokémon:\n")
+                        pd.getPokeInfo(pokeName.lower())
+                        keepPlaying, dificultad, generacion = newGame(keepPlaying, dificultad, generacion)
                     os.system("cls")
 
             elif option == 3:

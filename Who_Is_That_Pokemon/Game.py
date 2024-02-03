@@ -2,6 +2,7 @@ import random as rand
 import pokemonData as pd
 import options as o
 
+lettersUsed = []
 
 def getAhorcado(numFallo, pokeSpaces):
     ahorcado = [
@@ -58,6 +59,7 @@ def getAhorcado(numFallo, pokeSpaces):
     return ahorcado[numFallo]
 
 def getLetterSpace(numGen):
+    lettersUsed.clear()
     id = o.getPokemonByGen(numGen)
     pokeName = pd.getName(id)
     pokeNameAux = pokeName
@@ -75,6 +77,15 @@ def menu():
 
 def help():
     print("Cómo funciona el juego")
+
+def isComplete(pokeName):
+    complete = False
+    if "_" not in pokeName:
+        complete = True
+
+    return complete
+
+
 
 def correctAnswer(pokeName):
 
@@ -120,14 +131,20 @@ def writeLetter(pokeName, pokeSpaces):
         pokeSpacesAux = pokeSpaces.replace(" ", "")
         newPokeSpaces = ""
         if letter in pokeName:
-            msj = f"GENIAL!! El pokémon contiene la letra '{letter}'"
-            for chr in range(0, len(pokeName)):
-                if pokeName[chr] == letter:
-                    newPokeSpaces += letter + " "
-                elif pokeSpacesAux[chr] != "_":
-                    newPokeSpaces += pokeSpacesAux[chr] + " "
-                else:
-                    newPokeSpaces += "_ "
+            if letter in lettersUsed:
+                msj = f"¡¡¡OH VAYA!!! Parece que ya habías dicho esa letra"
+                newPokeSpaces = pokeSpaces
+                isFail = True
+            else:
+                msj = f"¡¡¡GENIAL!! El pokémon contiene la letra '{letter}'"
+                for chr in range(0, len(pokeName)):
+                    if pokeName[chr] == letter:
+                        newPokeSpaces += letter + " "
+                    elif pokeSpacesAux[chr] != "_":
+                        newPokeSpaces += pokeSpacesAux[chr] + " "
+                    else:
+                        newPokeSpaces += "_ "
+                lettersUsed.append(letter)
 
 
         else:
