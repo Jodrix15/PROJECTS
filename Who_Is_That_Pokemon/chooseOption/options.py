@@ -1,29 +1,16 @@
 import random as rand
-
-def menuWelcome():
-    print("\n=======BIENVENIDO AL POKEHORCADO=======")
-def menuGen():
-    print("\nElige la generación Pokémon con la que quieras jugar\n(solo saldrán pokémons de esa generación):\n\n"+
-          "1. Primera Generación\n"
-          "2. Segunda Generación\n"
-          "3. Tercera Generación\n"
-          "4. Cuarta Generación\n"
-          "5. Jugar con todos los pokémon\n")
-
-def menuDifficulty():
-    print("\nElige la dificultad:\n\n"
-          "1. Fácil\n"
-          "2. Normal\n"
-          "3. Difícil\n"
-          "4. Ayuda\n")
+from chooseOption import menu as m
+from utils import Utils as u
 
 
 def getOptionInt(opciones):
     opcion = input("Escoge una opcion: ")
-    while not opcion.isnumeric() or opcion not in(opciones):
-        opcion = input(f"Debe ser un número entre 1 y {len(opciones)}\nEscoge una opcion: ")
+    if opcion != "garmendia":
+        while not opcion.isnumeric() or opcion not in(opciones):
+            opcion = input(f"Debe ser un número entre 1 y {len(opciones)}\nEscoge una opcion: ")
+        opcion = int(opcion)
 
-    return int(opcion)
+    return opcion
 
 def getOptionChr(opciones, msj):
     opcion = input(msj).lower()
@@ -35,10 +22,12 @@ def getOptionChr(opciones, msj):
 def getPokemonID(numStartGen, numEndGen):
     return rand.randint(numStartGen, numEndGen)
 
+def getPokemonIDGarmendia(list):
+    return rand.choice(list)
 
 def getGen():
-    menuGen()
-    opcion = getOptionInt(["1", "2", "3", "4", "5"])
+    m.menuGen()
+    opcion = getOptionInt(["1", "2", "3", "4", "5", "6"])
     return opcion
 
 def getPokemonByGen(numGen):
@@ -57,12 +46,17 @@ def getPokemonByGen(numGen):
 
     elif numGen == 5:
         pokemonID = getPokemonID(1, 493)
+    else:
+        m.menuOculto()
+        pokemonID = getPokemonIDGarmendia([389, 424, 405, 475, 468, 134])
+        u.enterClear()
 
     return pokemonID
 
-def getDifficulty():
-    menuDifficulty()
-    opcion = getOptionInt(["1", "2", "3", "4"])
+def getDifficulty(msj):
+    print(msj)
+    m.menuDifficulty()
+    opcion = getOptionInt(["1", "2", "3", "4", "5"])
 
     if opcion == 1:
         dificultad = "f"
@@ -72,7 +66,12 @@ def getDifficulty():
 
     elif opcion == 3:
         dificultad = "d"
-
+    elif opcion == 4:
+        dificultad = "i"
+    elif opcion == 5:
+        dificultad = "s"
+    else:
+        dificultad = "garmendia"
 
     return dificultad
 
